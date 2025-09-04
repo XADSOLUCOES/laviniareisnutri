@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavínia Reis | Estratégia Digital</title>
+    <style>
+        /* ESTILOS GERAIS */
+        :root {
+            --bg: #ffffff;
+            --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+            --ink: #111827;
+            --muted: #6b7280;
+            --p1: #8E0AE4;
+            --p2: #E463FF;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --success: #16a34a;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--ink);
+            background-color: var(--bg);
+            background-image: var(--bg-gradient);
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            line-height: 1.6;
+        }
+
+        /* MARCA D'ÁGUA COM ELEMENTOS SUAVES */
+        .watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.2;
+            overflow: hidden;
+        }
+
+        .element {
+            position: absolute;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .element-1 {
+            top: 10%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(142, 10, 228, 0.1) 0%, transparent 70%);
+            border-radius: 60% 30% 70% 40%;
+            transform: rotate(30deg);
+            animation-delay: 0s;
+        }
+
+        .element-2 {
+            top: 65%;
+            left: 80%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(228, 99, 255, 0.1) 0%, transparent 70%);
+            border-radius: 30% 60% 40% 70%;
+            transform: rotate(-20deg);
+            animation-delay: -5s;
+        }
+
+        .element-3 {
+            top: 30%;
+            left: 75%;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(142, 10, 228, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation-delay: -10s;
+        }
+
+        .connection {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(142, 10, 228, 0.2), rgba(228, 99, 255, 0.2));
+            transform-origin: left center;
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        .connection-1 {
+            top: 25%;
+            left: 20%;
+            width: 30%;
+            animation-delay: 0s;
+        }
+
+        .connection-2 {
+            top: 60%;
+            left: 15%;
+            width: 40%;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(-5px, 8px) rotate(2deg);
+            }
+            50% {
+                transform: translate(3px, -5px) rotate(-2deg);
+            }
+            75% {
+                transform: translate(5px, 3px) rotate(1deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* LAYOUT SIMPLIFICADO E COMPATÍVEL */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0.5rem 0;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        p {
+            color: #374151;
+            line-height: 1.7;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .lead {
+            font-size: 1.1rem;
+            color: #4b5563;
+        }
+
+        .accent-text {
+            background: linear-gradient(135deg, var(--p2), var(--p1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: var(--p1);
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: center;
+            padding: 14px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            background: var(--p1);
+            transition: transform 0.15s ease;
+            box-shadow: 0 4px 12px rgba(142, 10, 228, 0.25);
+            border: none;
+            font-size: 1rem;
+            cursor: default; /* Garante que o cursor não mude para 'mãozinha' */
+        }
+
+        .btn:hover {
+            transform: translateY(0); /* Remove o efeito de hover */
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background-color: #f3e8ff;
+            color: var(--p1);
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 1px solid #e9d5ff;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section {
+            padding: 40px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .hero {
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .hero-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .diagnosis-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .diagnosis-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        .diagnosis-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .diagnosis-card li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .diagnosis-card .icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-top: 4px;
+        }
+
+        .engineering-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .footer {
+            border-top: 1px solid #e5e7eb;
+            margin-top: 20px;
+            padding: 20px 0;
+            color: #6b7280;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--p2), var(--p1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+
+        /* MELHORIAS DE COMPATIBILIDADE */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .stats-container {
+                gap: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="watermark">
+        <div class="element element-1"></div>
+        <div class="element element-2"></div>
+        <div class="element element-3"></div>
+        
+        <div class="connection connection-1"></div>
+        <div class="connection connection-2"></div>
+    </div>
+
+    <header class="hero section">
+        <div class="container hero-inner">
+            <div class="reveal">
+                <div class="badge">
+                    Estratégia Digital | Lavínia Reis
+                </div>
+                <h1>Nutrição com Conexão. <br><span class="accent-text">Resultados com Propósito.</span></h1>
+                <p class="lead" style="max-width:600px; margin: 1rem auto;">
+                    Lavínia, sua autenticidade já transformou mais de 1.500 vidas. Agora imagine amplificar esse impacto através de cursos online e mentorias que refletem sua essência.
+                </p>
+                <p style="font-size:1.1rem">Sua <strong>habilidade única de conectar</strong> com as pessoas e seus <strong>resultados comprovados</strong> são a base perfeita para expandir sua missão.</p>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number">15.4K</div>
+                        <div class="stat-label">Seguidores</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1.3M</div>
+                        <div class="stat-label">Views Recorde</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">70+</div>
+                        <div class="stat-label">Reviews 5★</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1.5K+</div>
+                        <div class="stat-label">Resultados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <div class="reveal text-center" style="max-width: 700px; margin:0 auto 2rem;">
+                <h2>Seu Conteúdo Conecta. Seu Potencial é Ilimitado.</h2>
+                <p class="lead">Lavínia, sua habilidade natural de criar conteúdo que engaja e transforma já prova sua vocação. Sua autenticidade é seu maior diferencial, e agora é o momento de transformar essa conexão em um legado digital.</p>
+            </div>
+            <div class="grid diagnosis-grid reveal">
+                <div class="card diagnosis-card">
+                    <h3 style="color:var(--success); margin-bottom:1rem;">Seus Pontos Fortes</h3>
+                    <ul>
+                        <li><span class="icon" style="color:var(--success)">✓</span> <div><strong>Conexão Autêntica:</strong> Habilidade natural de criar laços genuínos com seu público</div></li>
+                        <li><span class="icon" style="color:var(--success)">✓</span> <div><strong>Conteúdo que Engaja:</strong> Reels com milhões de views e alta interação</div></li>
+                        <li><span class="icon" style="color:var(--success)">✓</span> <div><strong>Resultados Comprovados:</strong> +1.500 transformações reais</div></li>
+                        <li><span class="icon" style="color:var(--success)">✓</span> <div><strong>Reputação Sólida:</strong> Nota 5.0 no Google e presença em diretórios</div></li>
+                    </ul>
+                </div>
+                <div class="card diagnosis-card">
+                    <h3 style="color:var(--danger); margin-bottom:1rem;">Oportunidades de Crescimento</h3>
+                    <ul>
+                        <li><span class="icon" style="color:var(--danger)">✗</span> <div><strong>Sem Site Próprio:</strong> Dependência exclusiva de redes sociais</div></li>
+                        <li><span class="icon" style="color:var(--danger)">✗</span> <div><strong>Cursos Não Explorados:</strong> Conhecimento que poderia impactar milhares online</div></li>
+                        <li><span class="icon" style="color:var(--danger)">✗</span> <div><strong>Visibilidade Limitada:</strong> Pouca presença nas buscas do Google</div></li>
+                        <li><span class="icon" style="color:var(--danger)">✗</span> <div><strong>Escalabilidade Manual:</strong> Processos que limitam seu crescimento</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="reveal text-center" style="max-width: 700px; margin:0 auto 2rem;">
+                <h2>Do Consultório Para o Mundo Digital</h2>
+                <p class="lead">Sua missão merece alcançar muito mais pessoas. Com a estratégia certa, você pode transformar seu conhecimento em cursos online, mentorias e um ecossistema digital que funciona para você.</p>
+            </div>
+            <div class="grid engineering-grid reveal">
+                <div class="card">
+                    <h3 class="accent-text">Cursos Online</h3>
+                    <p>Desenvolvemos <strong class="highlight">cursos online</strong> que capturam sua essência, permitindo que você ensine milhares de alunos simultaneamente, sem limites geográficos.</p>
+                </div>
+                <div class="card">
+                    <h3 class="accent-text">Mentorias em Grupo</h3>
+                    <p>Crie <strong class="highlight">programas de mentoria</strong> onde você guia grupos em jornadas transformadoras, multiplicando seu impacto mantendo a conexão humana.</p>
+                </div>
+                <div class="card">
+                    <h3 class="accent-text">Presença Digital</h3>
+                    <p>Construímos sua <strong class="highlight">autoridade online</strong>, site profissional e presença estratégica, para que quem busca nutrição encontre você como referência.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section text-center">
+            <div class="reveal">
+                <h2>Sua Jornada Para Impactar Mais Pessoas</h2>
+                <p class="lead" style="max-width: 600px; margin: 1rem auto;">Lavínia, sua autenticidade já conquistou corações e transformou vidas.</p>
+                
+                <p class="lead" style="max-width: 600px; margin: 1rem auto;">
+                    <span style="font-size: 1.2em; line-height: 1.2;">A questão não é se você está pronta para o próximo nível.</span>
+                </p>
+                <p style="max-width: 600px; margin: 0 auto 1.5rem; font-size: 1.1rem;">
+                    <span style="font-weight: 700;">A questão é: quantas vidas você quer impactar?</span>
+                </p>
+                
+                <p class="lead" style="max-width: 600px; margin: 1.5rem auto 1.5rem;">Sua combinação única de conhecimento e habilidade de conexão é especial. Com a estratégia certa, você pode amplificar sua missão e transformar ainda mais vidas.</p>
+                
+                <div class="btn">Lavínia, se esta é a sua hora, o primeiro passo é nosso.</div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 X-AD · Estratégia Digital para Lavínia Reis</p>
+    </footer>
+
+</body>
+</html>
